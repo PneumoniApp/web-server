@@ -1,0 +1,78 @@
+{% extends "main/base.html" %}
+{%block title%} View registers {%endblock%}
+{% block scripts_head %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" />
+<link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css" />
+
+
+{% endblock %}
+{%block content%}
+
+<div class="pagetitle">
+    <h1>View Registers</h1>
+</div><!-- End Page Title -->
+
+<section class="section">
+    <div class="row">
+
+        <div class="col-12">
+
+            <div class="card" style="width:100%;">
+                <div class="card-body">
+                    <h5 class="card-title">Predictions table</h5>
+
+                    <table class="table table-bordered table-striped predictionTable" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th class="th-sm">Id</th>
+                                <th class="th-sm">Name</th>
+                                <th class="th-sm">Result</th>
+                                <th class="th-sm">Normal level</th>
+                                <th class="th-sm">Pneumonia level</th>
+                                <th class="th-sm">Img</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in ls %}
+                            <tr>
+                                <td>{{item.id}}</td>
+                                <td>{{item.name}}</td>
+                                {%if item.result == True %}
+                                <td>Pneumonia</td>
+                                {% else %}
+                                <td>Normal</td>
+                                {%endif%}
+                                <td>{{item.normal_level}}</td>
+                                <td>{{item.pneumonia_level}}</td>
+                                <td><img src="{{item.img.url}}" style="max-width:400px ; min-width: 50px;"
+                                        alt="Xray image"></td>
+                            </tr>
+                            {% endfor%}
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</section>
+{%endblock%}
+
+{% block scripts_body%}
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"
+    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+<script src="//cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.predictionTable').DataTable({
+            responsive: true
+        });
+    });
+</script>
+{% endblock %}

@@ -24,4 +24,7 @@ def viewPrediction(response,id):
     x=XRay.objects.get(id=id)
     result=["Normal", "Pneumonia"]
     return render(response, "prediction/viewPrediction.html",{"xray":x,"result":result[x.result]})
-    #return HttpResponse("Here is going to show the results: id=%i" %id)
+
+def indexPrediction(response):
+    ls=XRay.objects.filter(user_id=response.user.id)
+    return render(response,"prediction/indexPrediction.html",{"ls":ls})   
