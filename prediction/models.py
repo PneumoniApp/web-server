@@ -18,7 +18,7 @@ def path_and_rename(path):
 class XRay(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="xray",null=True)
     name= models.CharField(max_length=200)
-    img= models.ImageField(upload_to =path_and_rename("prediction/media/xray_images/"))
+    img= models.ImageField(upload_to =path_and_rename("xray_images/"))
     result = models.BooleanField(default=0)
     normal_level = models.FloatField(default=0.0)
     pneumonia_level = models.FloatField(default=0.0)

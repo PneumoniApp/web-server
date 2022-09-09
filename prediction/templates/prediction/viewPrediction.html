@@ -1,0 +1,65 @@
+{% extends "main/base.html" %}
+{%block title%} Create new xray {%endblock%}
+{%block content%}
+
+<div class="pagetitle">
+    <h1>View prediction</h1>
+</div><!-- End Page Title -->
+
+<section class="section">
+    <div class="row">
+        <div class="col-lg-6">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">View xray number {{xray.id}}</h5>
+                    <h3>Name: {{xray.name}}</h3>
+                    <p class="card-text">This is a {{result}} case.</p>
+                </div>
+                <img src="{{xray.img.url}}" class="card-img-bottom" alt="Xray image">
+                <p>{{xray.img.url}}</p>
+            </div>
+
+
+        </div>
+
+        <div class="col-lg-6">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Pneumonia level</h5>
+
+                    <!-- Pie Chart -->
+                    <canvas id="pieChart" style="max-height: 400px;"></canvas>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", () => {
+                            new Chart(document.querySelector('#pieChart'), {
+                                type: 'pie',
+                                data: {
+                                    labels: [
+                                        'Normal',
+                                        'Pneumonia'
+                                    ],
+                                    datasets: [{
+                                        label: 'Level of pneumonia',
+                                        data: [300, 50,],
+                                        backgroundColor: [
+                                            'rgb(54, 162, 235)',
+                                            'rgb(50, 65, 65)'
+                                        ],
+                                        hoverOffset: 4
+                                    }]
+                                }
+                            });
+                        });
+                    </script>
+                    <!-- End Pie CHart -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+{%endblock%}

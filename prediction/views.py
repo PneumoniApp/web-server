@@ -21,5 +21,7 @@ def createPrediction(response):
     return render(response,"prediction/create.html",{"form":form})
 
 def viewPrediction(response,id):
-    #return render(response, "main/view.html",{})
-    return HttpResponse("Here is going to show the results: id=%i" %id)
+    x=XRay.objects.get(id=id)
+    result=["Normal", "Pneumonia"]
+    return render(response, "prediction/viewPrediction.html",{"xray":x,"result":result[x.result]})
+    #return HttpResponse("Here is going to show the results: id=%i" %id)
