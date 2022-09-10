@@ -26,4 +26,10 @@ class XRay(models.Model):
     def __str__(self):
         return self.name
 
-    
+class Comment(models.Model):
+    xray=models.ForeignKey(XRay,on_delete=models.CASCADE)
+    text = models.CharField(max_length=300)
+    date= models.DateTimeField(auto_now_add=True, blank=True)
+
+    def __str__(self):
+        return self.text

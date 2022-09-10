@@ -1,16 +1,43 @@
 {% extends "main/base.html" %}
 {%block title%} Create new xray {%endblock%}
+{% load crispy_forms_tags %}
 {%block content%}
-<h3>Create xray</h3>
-<form method="post" class="form-group" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
 
-            {{form.as_p}}
-            <button type="submit" , name="save" class="btn btn-success">Create new</button>
+
+
+<div class="pagetitle">
+    <h1>Create xray</h1>
+
+</div><!-- End Page Title -->
+
+<section class="section">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Enter the data</h5>
+                    <form method="post" class=" row g-3" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="col-12">
+
+                            {{form }}
+                            <div class="text-center mt-3">
+                                <button type="submit" , name="save" class="btn btn-primary">Create new</button>
+                                <button type="reset" class="btn btn-secondary">Reset</button>
+                            </div>
+
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+
         </div>
 
+
     </div>
-</form>
+
+</section>
 {%endblock%}

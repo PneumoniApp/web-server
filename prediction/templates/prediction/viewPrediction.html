@@ -23,37 +23,68 @@
         </div>
 
         <div class="col-lg-6">
+            <div class="row align-items-top">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Pneumonia level</h5>
 
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Pneumonia level</h5>
-
-                    <!-- Pie Chart -->
-                    <canvas id="pieChart" style="max-height: 400px;"></canvas>
-                    <script>
-                        document.addEventListener("DOMContentLoaded", () => {
-                            new Chart(document.querySelector('#pieChart'), {
-                                type: 'pie',
-                                data: {
-                                    labels: [
-                                        'Normal',
-                                        'Pneumonia'
-                                    ],
-                                    datasets: [{
-                                        label: 'Level of pneumonia',
-                                        data: [300, 50,],
-                                        backgroundColor: [
-                                            'rgb(170, 170,170)',
-                                            'rgb(50, 65, 65)'
+                        <!-- Pie Chart -->
+                        <canvas id="pieChart" style="max-height: 400px;"></canvas>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", () => {
+                                new Chart(document.querySelector('#pieChart'), {
+                                    type: 'pie',
+                                    data: {
+                                        labels: [
+                                            'Normal',
+                                            'Pneumonia'
                                         ],
-                                        hoverOffset: 4
-                                    }]
-                                }
+                                        datasets: [{
+                                            label: 'Level of pneumonia',
+                                            data: [300, 50,],
+                                            backgroundColor: [
+                                                'rgb(170, 170,170)',
+                                                'rgb(50, 65, 65)'
+                                            ],
+                                            hoverOffset: 4
+                                        }]
+                                    }
+                                });
                             });
-                        });
-                    </script>
-                    <!-- End Pie CHart -->
+                        </script>
+                        <!-- End Pie CHart -->
 
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Comments</h5>
+
+                        <!-- Bordered Tabs Justified -->
+                        <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+                            <li class="nav-item flex-fill" role="presentation">
+                                <button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab"
+                                    data-bs-target="#bordered-justified-home" type="button" role="tab"
+                                    aria-controls="home" aria-selected="true">Comments</button>
+                            </li>
+                            <li class="nav-item flex-fill" role="presentation">
+                                <button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab"
+                                    data-bs-target="#bordered-justified-profile" type="button" role="tab"
+                                    aria-controls="profile" aria-selected="false">Add comment</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content pt-2" id="borderedTabJustifiedContent">
+                            <div class="tab-pane fade show active" id="bordered-justified-home" role="tabpanel"
+                                aria-labelledby="home-tab">
+                                Here is going to show all comments.
+                            </div>
+                            <div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel"
+                                aria-labelledby="profile-tab">
+                                Here the form of add comment.
+                            </div>
+                        </div><!-- End Bordered Tabs Justified -->
+
+                    </div>
                 </div>
             </div>
 

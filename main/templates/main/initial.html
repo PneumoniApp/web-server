@@ -43,7 +43,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="/" class="logo d-flex align-items-center">
                 <img src="{% static 'assets/img/logo.png' %}" alt="logo" class="rounded-circle">
                 <span class="d-none d-lg-block">PneumoniApp</span>
             </a>
@@ -57,6 +57,11 @@
                 <li class="nav-item ">
                     <a class="nav-link nav-icon" href="/logout">
                         Logout
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link nav-icon" href="/home">
+                        Home
                     </a>
                 </li>
                 {%else%}
