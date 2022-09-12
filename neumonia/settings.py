@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     'register.apps.RegisterConfig',
     'prediction.apps.PredictionConfig',
+    'patient.apps.PatientConfig',
 ]
 
 MIDDLEWARE = [

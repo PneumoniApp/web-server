@@ -1,0 +1,47 @@
+{% extends "main/base.html" %}
+{%block title%} Create new xray {%endblock%}
+{%block content%}
+
+<div class="pagetitle">
+    <h1>View prediction</h1>
+</div><!-- End Page Title -->
+
+<section class="section">
+    <div class="row">
+        <div class="col-lg-6">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">View patient number {{patient.id}}</h5>
+                    <h3>Name: {{patient.name}}</h3>
+                    <p class="card-text">Nss: {{patient.nss}}</p>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="col-lg-6">
+            <div class="row align-items-top">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Pneumonia level</h5>
+
+
+
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Comments</h5>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+{%endblock%}

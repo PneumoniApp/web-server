@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 import os
 from uuid import uuid4
+from patient.models import Patient
 def path_and_rename(path):
         def wrapper(instance, filename):
             ext = filename.split('.')[-1]
@@ -17,7 +18,7 @@ def path_and_rename(path):
 # Create your models here.
 class XRay(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="xray",null=True)
-    name= models.CharField(max_length=200)
+    patient=models.ForeignKey(Patient,on_delete=models.CASCADE,related_name="patient")
     img= models.ImageField(upload_to =path_and_rename("xray_images/"))
     result = models.BooleanField(default=0)
     normal_level = models.FloatField(default=0.0)
