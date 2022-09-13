@@ -55,3 +55,8 @@ def deleteXray(response,id):
     x=XRay.objects.get(id=id)
     x.delete()
     return redirect("/home/")
+
+def deleteComment(response,id,xray_id):
+    c=Comment.objects.get(id=id)
+    c.delete()
+    return redirect("/viewPrediction/"+str(xray_id))

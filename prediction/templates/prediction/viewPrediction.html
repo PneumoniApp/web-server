@@ -81,6 +81,7 @@
                                         <tr>
                                             <th scope="col">Comment</th>
                                             <th scope="col">Date</th>
+                                            <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -89,7 +90,11 @@
 
                                             <td>{{c.text}} </td>
                                             <td>{{c.date}}</td>
-
+                                            <td style="vertical-align: middle;"><a
+                                                    href="/deleteComment/{{c.id}}/{{xray.id}}"><button type="button"
+                                                        class="btn btn-danger rounded-pill">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button></a></td>
 
                                         </tr>
                                         {% endfor%}
