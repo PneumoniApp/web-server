@@ -1,3 +1,4 @@
+import enum
 from secrets import choice
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
@@ -31,5 +32,9 @@ def viewPrediction(response,id):
     return render(response, "prediction/viewPrediction.html",{"xray":x,"result":result[x.result],"patient":patient})
 
 def indexPrediction(response):
-    ls=XRay.objects.filter(user_id=response.user.id)
+    xray=XRay.objects.filter(user_id=response.user.id)
+    names=[]
+    for i in xray:
+        names.append(Patient.objects.get(id=i.patient_id).name)
+    ls=zip(xray,names)
     return render(response,"prediction/indexPrediction.html",{"ls":ls})   

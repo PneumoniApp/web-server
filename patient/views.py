@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Patient
 from .forms import CreateNewPatient
+from prediction.models import XRay
 # Create your views here.
 
 def createPatient(response):
@@ -26,7 +27,8 @@ def createPatient(response):
 
 def viewPatient(response,id):
     x=Patient.objects.get(id=id)
-    return render(response, "patient/viewPatient.html",{"patient":x})
+    ls=XRay.objects.filter(patient_id=id)
+    return render(response, "patient/viewPatient.html",{"patient":x, "ls":ls})
 
 def indexPatient(response):
     ls=Patient.objects.filter(user_id=response.user.id)

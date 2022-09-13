@@ -34,11 +34,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for item in ls %}
+                            {% for item , name in ls %}
 
                             <tr>
                                 <td>{{item.id}}</td>
-                                <td><a href="/viewPrediction/{{item.id}}">{{item.name}}</a></td>
+                                <td><a href="/viewPrediction/{{item.id}}">{{name}}</a></td>
                                 {%if item.result == True %}
                                 <td>Pneumonia</td>
                                 {% else %}
@@ -50,6 +50,7 @@
                                         class="imgtableresponsive" alt="Xray image">
                                 </td>
                             </tr>
+
                             {% endfor%}
                         </tbody>
 

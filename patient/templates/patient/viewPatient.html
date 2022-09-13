@@ -1,42 +1,74 @@
 {% extends "main/base.html" %}
 {%block title%} Create new xray {%endblock%}
+{% block scripts_head %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" />
+<link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css" />
+
+
+{% endblock %}
 {%block content%}
 
 <div class="pagetitle">
-    <h1>View prediction</h1>
+    <h1>View patient</h1>
 </div><!-- End Page Title -->
 
 <section class="section">
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
 
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">View patient number {{patient.id}}</h5>
-                    <h3>Name: {{patient.name}}</h3>
+                    <h3 class="pt-3">Name: {{patient.name}}</h3>
                     <p class="card-text">Nss: {{patient.nss}}</p>
+                    <p class="card-text">sex: {% if patient.sex == False %} Male {% else %} Female {% endif %}</p>
+                    <p class="card-text">Age: {{patient.age}}</p>
+                    <p class="card-text">Weight: {{patient.weight}}</p>
+                    <p class="card-text">Height: {{patient.height}}</p>
                 </div>
             </div>
 
 
         </div>
 
-        <div class="col-lg-6">
-            <div class="row align-items-top">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Pneumonia level</h5>
+        <div class="col-lg-12">
+            <div class="card" style="width:100%;">
+                <div class="card-body">
+                    <h5 class="card-title">Predictions table</h5>
 
+                    <table class="table  table-hover predictionTable" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th class="th-sm">Id</th>
+                                <th class="th-sm">Name</th>
+                                <th class="th-sm">Result</th>
+                                <th class="th-sm">Normal level</th>
+                                <th class="th-sm">Pneumonia level</th>
+                                <th class="th-sm">Img</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in ls %}
 
+                            <tr>
+                                <td>{{item.id}}</td>
+                                <td><a href="/viewPrediction/{{item.id}}">{{patient.name}}</a></td>
+                                {%if item.result == True %}
+                                <td>Pneumonia</td>
+                                {% else %}
+                                <td>Normal</td>
+                                {%endif%}
+                                <td>{{item.normal_level}}</td>
+                                <td>{{item.pneumonia_level}}</td>
+                                <td><img src="{{item.img.url}}" style="width:100%; max-width:400px;"
+                                        class="imgtableresponsive" alt="Xray image">
+                                </td>
+                            </tr>
 
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Comments</h5>
+                            {% endfor%}
+                        </tbody>
 
-
-                    </div>
+                    </table>
                 </div>
             </div>
 
@@ -45,3 +77,17 @@
 
 </section>
 {%endblock%}
+{% block scripts_body%}
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"
+    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+<script src="//cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.predictionTable').DataTable({
+            responsive: true
+        });
+    });
+</script>
+{% endblock %}
