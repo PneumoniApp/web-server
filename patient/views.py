@@ -33,3 +33,8 @@ def viewPatient(response,id):
 def indexPatient(response):
     ls=Patient.objects.filter(user_id=response.user.id)
     return render(response,"patient/indexPatient.html",{"ls":ls})   
+
+def deletePatient(response,id):
+    x=Patient.objects.get(id=id)
+    x.delete()
+    return redirect("/home/")

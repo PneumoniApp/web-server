@@ -2,14 +2,14 @@ import enum
 from secrets import choice
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import XRay
-from .forms import CreateNewXRay
+from .models import XRay, Comment
+from .forms import CreateNewXRay , CreateNewComment
 from patient.models import Patient
 # Create your views here.
 
 def createPrediction(response):
     patient=Patient.objects.filter(user_id=response.user.id)
-    ch= [(p.id,p.name) for p in patient]
+    ch= [(p.id,str(p.nss)+" ("+str(p.name)+ ")") for p in patient]
     if response.method == "POST":
         form = CreateNewXRay(response.POST,response.FILES,choice=ch)
 
@@ -26,10 +26,21 @@ def createPrediction(response):
     return render(response,"prediction/create.html",{"form":form})
 
 def viewPrediction(response,id):
+    if response.method == "POST":
+        form = CreateNewComment(response.POST)
+
+        if form.is_valid():
+            t= form.cleaned_data["text"]
+            c = Comment(text=t, xray_id=id)
+            c.save()
+        return HttpResponseRedirect("/viewPrediction/%i" %id)
+    else:        
+        form = CreateNewComment()
     x=XRay.objects.get(id=id)
     patient=Patient.objects.get(id=x.patient_id)
     result=["Normal", "Pneumonia"]
-    return render(response, "prediction/viewPrediction.html",{"xray":x,"result":result[x.result],"patient":patient})
+    com=Comment.objects.filter(xray_id=x.id)
+    return render(response, "prediction/viewPrediction.html",{"xray":x,"result":result[x.result],"patient":patient,"form":form,"comments":com})
 
 def indexPrediction(response):
     xray=XRay.objects.filter(user_id=response.user.id)
@@ -38,3 +49,9 @@ def indexPrediction(response):
         names.append(Patient.objects.get(id=i.patient_id).name)
     ls=zip(xray,names)
     return render(response,"prediction/indexPrediction.html",{"ls":ls})   
+
+
+def deleteXray(response,id):
+    x=XRay.objects.get(id=id)
+    x.delete()
+    return redirect("/home/")

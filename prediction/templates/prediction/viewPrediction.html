@@ -76,11 +76,43 @@
                         <div class="tab-content pt-2" id="borderedTabJustifiedContent">
                             <div class="tab-pane fade show active" id="bordered-justified-home" role="tabpanel"
                                 aria-labelledby="home-tab">
-                                Here is going to show all comments.
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Comment</th>
+                                            <th scope="col">Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for c in comments%}
+                                        <tr>
+
+                                            <td>{{c.text}} </td>
+                                            <td>{{c.date}}</td>
+
+
+                                        </tr>
+                                        {% endfor%}
+                                    </tbody>
+                                </table>
+
                             </div>
                             <div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel"
                                 aria-labelledby="profile-tab">
-                                Here the form of add comment.
+
+                                <form method="post" class=" row g-3">
+                                    {% csrf_token %}
+                                    <div class="col-12">
+
+                                        {{form }}
+                                        <div class="text-center mt-3">
+                                            <button type="submit" , name="save" class="btn btn-primary">Create
+                                                new</button>
+                                            <button type="reset" class="btn btn-secondary">Reset</button>
+                                        </div>
+
+                                    </div>
+                                </form>
                             </div>
                         </div><!-- End Bordered Tabs Justified -->
 
@@ -88,6 +120,39 @@
                 </div>
             </div>
 
+        </div>
+        <div class="col-lg-12">
+            <div class="alert alert-danger ">
+                <i class=" bi bi-exclamation-octagon me-1"></i>
+                Danger zone! Use the next button to delete this xray register.
+                <p></p>
+                <div class="col-12" style="text-align: right;">
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#basicModal">
+                        Delete
+                    </button>
+                    <div class="modal fade" id="basicModal" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Delete xray</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body" style="text-align: left;">
+                                    The Xray register is going to be deleted permanently.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancel</button>
+                                    <a href="/deleteXray/{{xray.id}}"><button type="button"
+                                            class="btn btn-danger">Delete</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End Basic Modal-->
+
+                </div>
+            </div>
         </div>
     </div>
 
