@@ -183,10 +183,11 @@
     // AJAX call when page has loaded
     $(document).ready(function () {
         $.ajax({
-            url: '/process_data_xray/',
+            url: '/process_data_xray/{{xray.id}}',
             data: {
-                'result': 'FOO',
-                'chart': "foo"
+                'result': 'Error',
+                'ps1': "0",
+                'ps2': "0"
             },
             data_type: 'html',
             success: function (data) {

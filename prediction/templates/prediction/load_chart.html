@@ -1,4 +1,5 @@
-{{class_name}}
+<p> The Normal level is: {{ps1}}</p>
+<p> The Pneumonia level is: {{ps2}}</p>
 <!-- Pie Chart -->
 <canvas id="pieChart" style="max-height: 400px;"></canvas>
 <script>
@@ -12,13 +13,13 @@
             ],
             datasets: [{
                 label: 'Level of pneumonia',
-                data: [300, 50,],
-                backgroundColor: [
-                    'rgb(170, 170,170)',
-                    'rgb(50, 65, 65)'
-                ],
-                hoverOffset: 4
-            }]
+                data: [{{ ps1 }}, {{ ps2 }},],
+        backgroundColor: [
+            'rgb(170, 170,170)',
+            'rgb(50, 65, 65)'
+        ],
+        hoverOffset: 4
+    }]
         }
     });
 </script>

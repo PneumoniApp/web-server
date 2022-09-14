@@ -27,7 +27,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Pneumonia level</h5>
-
+                        <p> The Normal level is: {{xray.normal_level}}</p>
+                        <p> The Pneumonia level is: {{xray.pneumonia_level}}</p>
                         <!-- Pie Chart -->
                         <canvas id="pieChart" style="max-height: 400px;"></canvas>
                         <script>
@@ -41,14 +42,14 @@
                                         ],
                                         datasets: [{
                                             label: 'Level of pneumonia',
-                                            data: [300, 50,],
-                                            backgroundColor: [
-                                                'rgb(170, 170,170)',
-                                                'rgb(50, 65, 65)'
-                                            ],
-                                            hoverOffset: 4
-                                        }]
-                                    }
+                                            data: [{{ xray.normal_level }}, {{ xray.pneumonia_level }},],
+                                    backgroundColor: [
+                                        'rgb(170, 170,170)',
+                                        'rgb(50, 65, 65)'
+                                    ],
+                                    hoverOffset: 4
+                                }]
+                                }
                                 });
                             });
                         </script>

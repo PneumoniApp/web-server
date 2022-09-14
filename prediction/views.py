@@ -1,3 +1,4 @@
+from traceback import print_tb
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from .models import XRay, Comment
@@ -66,15 +67,26 @@ def deleteComment(response,id,xray_id):
     c.delete()
     return redirect("/viewPrediction/"+str(xray_id))
 
-def process_data_xray(response):
-    file_path = os.path.join(settings.MEDIA_ROOT, 'cat.jpg')
-    resp = requests.post("http://localhost:5000/predict",
-                    files={"file": open(file_path,'rb')})
+def process_data_xray(response,id):
+    x=XRay.objects.get(id=id)
+    path=str(x.img.path)
+    try:
+        resp = requests.post("http://localhost:5000/predict",
+                    files={"file": open(path,'rb')})
+        resp.raise_for_status()
+    except requests.exceptions.HTTPError as err:
+        print("Error--------------")
+        data = {'result': "Error",'chart':"Error"}
+        return JsonResponse(data)
     context=resp.json()
-    
     result=render_to_string("prediction/load_result.html",context)
-    
     chart=render_to_string("prediction/load_chart.html",context)
-    
     data = {'result': result,'chart':chart}
+    print("context-----------")
+    print(context)
+    x.result=context['result']
+    x.normal_level=context['ps1']
+    x.pneumonia_level=context['ps2']
+    x.save()
     return JsonResponse(data)
+    
