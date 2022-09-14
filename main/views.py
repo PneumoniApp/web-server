@@ -63,3 +63,9 @@ def create(response):
 def view(response):
     return render(response, "main/view.html",{})
 
+
+def information(response):
+    if response.user.is_authenticated:
+        username=response.user.username
+        return render(response,"main/information.html",{"username":username})
+    return redirect("/")
