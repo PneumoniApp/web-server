@@ -1,9 +1,13 @@
 from cgitb import text
 from unicodedata import name
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from .models import ToDoList,Item
 from .forms import CreateNewList
+import requests
+import os
+from django.conf import settings
+from django.template.loader import render_to_string
 # Create your views here.
 
 def index(response,id):
@@ -58,3 +62,4 @@ def create(response):
 
 def view(response):
     return render(response, "main/view.html",{})
+

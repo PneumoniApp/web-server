@@ -1,0 +1,25 @@
+{{class_name}}
+<!-- Pie Chart -->
+<canvas id="pieChart" style="max-height: 400px;"></canvas>
+<script>
+
+    new Chart(document.querySelector('#pieChart'), {
+        type: 'pie',
+        data: {
+            labels: [
+                'Normal',
+                'Pneumonia'
+            ],
+            datasets: [{
+                label: 'Level of pneumonia',
+                data: [300, 50,],
+                backgroundColor: [
+                    'rgb(170, 170,170)',
+                    'rgb(50, 65, 65)'
+                ],
+                hoverOffset: 4
+            }]
+        }
+    });
+</script>
+<!-- End Pie CHart -->

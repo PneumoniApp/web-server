@@ -1,10 +1,12 @@
-import enum
-from secrets import choice
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from .models import XRay, Comment
 from .forms import CreateNewXRay , CreateNewComment
 from patient.models import Patient
+import requests
+import os
+from django.conf import settings
+from django.template.loader import render_to_string
 # Create your views here.
 
 def createPrediction(response):
@@ -19,7 +21,10 @@ def createPrediction(response):
             x = XRay(patient_id=n, img=i)
             x.save()
             response.user.xray.add(x)
-            return HttpResponseRedirect("/viewPrediction/%i" %x.id)
+            patient=Patient.objects.get(id=x.patient_id)
+            form = CreateNewComment()
+            com=Comment.objects.filter(xray_id=x.id)
+            return render(response,"prediction/nonLoadPrediction.html",{"xray":x,"patient":patient,"form":form,"comments":com})
     else:
         form = CreateNewXRay(choice=ch)
        
@@ -60,3 +65,16 @@ def deleteComment(response,id,xray_id):
     c=Comment.objects.get(id=id)
     c.delete()
     return redirect("/viewPrediction/"+str(xray_id))
+
+def process_data_xray(response):
+    file_path = os.path.join(settings.MEDIA_ROOT, 'cat.jpg')
+    resp = requests.post("http://localhost:5000/predict",
+                    files={"file": open(file_path,'rb')})
+    context=resp.json()
+    
+    result=render_to_string("prediction/load_result.html",context)
+    
+    chart=render_to_string("prediction/load_chart.html",context)
+    
+    data = {'result': result,'chart':chart}
+    return JsonResponse(data)
