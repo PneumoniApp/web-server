@@ -71,19 +71,23 @@ def process_data_xray(response,id):
     x=XRay.objects.get(id=id)
     path=str(x.img.path)
     try:
-        resp = requests.post("http://localhost:5000/predict",
+        resp = requests.post("http://api.celi-y-eli.fun/predict",
                     files={"file": open(path,'rb')})
         resp.raise_for_status()
     except requests.exceptions.HTTPError as err:
-        print("Error--------------")
-        data = {'result': "Error",'chart':"Error"}
+        data = {'result': "Error:invalid http response",'chart':"Error:invaliid http response"}
         return JsonResponse(data)
+    except requests.exceptions.Timeout:
+        data = {'result': "Error:timeout",'chart':"Error:timeout"}
+        return JsonResponse(data)
+    except requests.exceptions.ConnectionError:
+        data = {'result': "Error:Connection Error",'chart':"Error:Connection Error"}
+        return JsonResponse(data)
+    context=resp.json()
     context=resp.json()
     result=render_to_string("prediction/load_result.html",context)
     chart=render_to_string("prediction/load_chart.html",context)
     data = {'result': result,'chart':chart}
-    print("context-----------")
-    print(context)
     x.result=context['result']
     x.normal_level=context['ps1']
     x.pneumonia_level=context['ps2']
