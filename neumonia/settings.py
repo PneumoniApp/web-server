@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-(v+8hwyifhfc_4%5smvyv+ai3#o!)g11b(4#^a&7exjm#r2xjf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['pneumonia.celi-y-eli.fun']
 
 
 # Application definition
@@ -90,8 +90,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME':'pneumonia',
-        'USER':'pneumonia_user',
-        'PASSWORD':'pneumonia',
+        'USER':'pneumoniaUser',
+        'PASSWORD':'pneumoniaUserPassword',
         'HOST':'127.0.0.1',
         'PORT':'3306',
         'OPTIONS':{
@@ -134,9 +134,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 # This is the place where static files actually live, se utiliza junto con python manage.py collectstatic para guardar todos los static individuales en una sola carpeta
-#STATIC_ROOT = '/location/for/storing/static/files'
+STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -152,6 +152,3 @@ MEDIA_URL= '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR,'static'),
-)
