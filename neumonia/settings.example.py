@@ -97,6 +97,17 @@ DATABASES = {
         'OPTIONS':{
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'" #used to handle the invalid or missing values from being stored in the database by INSERT and UPDATE statements.
             }
+    },
+    'pneumonia_bck':{
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME':'',
+        'USER':'',
+        'PASSWORD':'',
+        'HOST':'127.0.0.1',
+        'PORT':'3306',
+        'OPTIONS':{
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'" #used to handle the invalid or missing values from being stored in the database by INSERT and UPDATE statements.
+            }
     }
 }
 

@@ -1,13 +1,16 @@
 from traceback import print_tb
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from .models import XRay, Comment
+from .models import XRay, Comment, XRayBck
 from .forms import CreateNewXRay , CreateNewComment
 from patient.models import Patient
 import requests
 import os
 from django.conf import settings
 from django.template.loader import render_to_string
+import base64
+from django.core.files.base import ContentFile
+from django.core.files import File
 # Create your views here.
 
 def createPrediction(response):
@@ -23,6 +26,13 @@ def createPrediction(response):
             x.save()
             response.user.xray.add(x)
             patient=Patient.objects.get(id=x.patient_id)
+            #bck of image binary field
+            path=str(x.img.path)
+            image_bck=open(path,'rb')
+            image_read=image_bck.read()
+            bck= XRayBck(img=image_read)
+            bck.pk=x.pk
+            bck.save(using='pneumonia_bck')
             form = CreateNewComment()
             com=Comment.objects.filter(xray_id=x.id)
             return render(response,"prediction/nonLoadPrediction.html",{"xray":x,"patient":patient,"form":form,"comments":com})
@@ -43,10 +53,24 @@ def viewPrediction(response,id):
     else:        
         form = CreateNewComment()
     x=XRay.objects.get(id=id)
+    path=str(x.img.path)
+    if not os.path.exists(path):
+        retrieve_from_bck_db(x)
     patient=Patient.objects.get(id=x.patient_id)
     result=["Normal", "Pneumonia"]
     com=Comment.objects.filter(xray_id=x.id)
     return render(response, "prediction/viewPrediction.html",{"xray":x,"result":result[x.result],"patient":patient,"form":form,"comments":com})
+
+def retrieve_from_bck_db(xray):
+    #print("El archivo no se encontro... Recuperando de bck db")
+    bck=XRayBck.objects.using('pneumonia_bck').get(id=xray.id)
+    path=str(xray.img.path)
+    data = bck.img
+    with open(path,'wb') as f:
+        file=File(f)
+        file.write(data)
+    #print("SE recupero la imagen")
+
 
 def indexPrediction(response):
     xray=XRay.objects.filter(user_id=response.user.id)

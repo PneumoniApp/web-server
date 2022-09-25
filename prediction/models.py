@@ -32,7 +32,13 @@ class XRay(models.Model):
 @receiver(post_delete, sender=XRay)
 def post_delete_image(sender, instance, *args, **kwargs):
     try:
-        instance.img.delete(save=False)
+        instance.img.delete(save=False)#delete image from filesystem
+    except:
+        pass
+    try:
+        #Here delete img from bck database
+        bck=XRayBck.objects.using('pneumonia_bck').get(id=instance.id)
+        bck.delete()
     except:
         pass
 
@@ -43,3 +49,9 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text
+
+class XRayBck(models.Model):
+    img= models.BinaryField()
+    
+    def __str__(self):
+        return "image"
