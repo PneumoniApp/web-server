@@ -6,7 +6,6 @@ path("<int:id>",views.index, name="index"),
 path("",views.initial,name="initial"),
 path("home/",views.home,name="home"),
 path("create/",views.create,name="create"),
-path("view/",views.view,name="view"),
 path("information/",views.information,name="information"),
 
 ]
