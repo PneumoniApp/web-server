@@ -6,6 +6,8 @@ import requests
 import os
 from django.conf import settings
 from django.template.loader import render_to_string
+import pandas as pd
+import numpy as np
 # Create your views here.
 
 
@@ -37,5 +39,11 @@ def create(response):
 def information(response):
     if response.user.is_authenticated:
         username=response.user.username
-        return render(response,"main/information.html",{"username":username})
+        data = pd.read_csv("/var/www/web-server/metrics.csv")
+        x=data['accuracy'].tolist()
+        x2=data['loss'].tolist()
+        x3=data['val_loss'].tolist()
+        x4=data['val_accuracy'].tolist()
+        y=list(np.arange(500))
+        return render(response,"main/information.html",{"username":username,"x":x,"y":y,"x2":x2,"x3":x3,"x4":x4})
     return redirect("/")
