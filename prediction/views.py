@@ -95,11 +95,11 @@ def process_data_xray(response,id):
     x=XRay.objects.get(id=id)
     path=str(x.img.path)
     try:
-        resp = requests.post("http://api.celi-y-eli.fun/predict",
+        resp = requests.post("http://ia.pneumoniapp.tech/predict",
                     files={"file": open(path,'rb')})
         resp.raise_for_status()
     except requests.exceptions.HTTPError as err:
-        data = {'result': "Error:invalid http response",'chart':"Error:invaliid http response"}
+        data = {'result': "Error:invalid http response",'chart':str(err)}
         return JsonResponse(data)
     except requests.exceptions.Timeout:
         data = {'result': "Error:timeout",'chart':"Error:timeout"}
