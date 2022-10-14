@@ -15,49 +15,53 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Results of the ia</h5>
-                    <!-- Line Chart -->
+
+                    <p class="card-text"> Train results - Loss: 0.1412830650806427 - Accuracy: 0.9741181135177612</p>
+                    <br>
+                    <p class="card-text"> Test results - Loss: 0.2124505043029785 - Accuracy: 0.8830128312110901</p>
+                    <br>
                     <canvas id="lineChart" style="max-height: 400px;"></canvas>
                     <script>
                         document.addEventListener("DOMContentLoaded", () => {
                             new Chart(document.querySelector('#lineChart'), {
                                 type: 'line',
                                 data: {
-								    labels:{{y}} ,
-                                    datasets: [{
-                                        label: 'Acc',
-									data: {{x}},
-                                        fill: false,
-                                        borderColor: 'rgb(75, 192, 192)',
-                                        tension: 0.1
+                                    labels: {{ y }},
+                            datasets: [{
+                                label: 'Acc',
+                                data: {{ x }},
+                            fill: false,
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1
                                     }, {
-                                        label: 'loss',
-									data: {{x2}},
-                                        fill: false,
-                                        borderColor: 'rgb(255, 0, 0)',
-                                        tension: 0.1
-								},{
+                                label: 'loss',
+                                data: {{ x2 }},
+                            fill: false,
+                            borderColor: 'rgb(255, 0, 0)',
+                            tension: 0.1
+								}, {
 
-                                        label: 'val_loss',
-									data: {{x3}},
-                                        fill: false,
-                                        borderColor: 'rgb(0, 0, 255)',
-                                        tension: 0.1
-											    },{
+                                label: 'val_loss',
+                                data: {{ x3 }},
+                            fill: false,
+                            borderColor: 'rgb(0, 0, 255)',
+                            tension: 0.1
+											    }, {
 
-                                        label: 'val_acc',
-									data: {{x4}},
-                                        fill: false,
-                                        borderColor: 'rgb(0, 255, 0)',
-                                        tension: 0.1
+                                label: 'val_acc',
+                                data: {{ x4 }},
+                            fill: false,
+                            borderColor: 'rgb(0, 255, 0)',
+                            tension: 0.1
 															}]
                                 },
-                                options: {
-                                    scales: {
-                                        y: {
-                                            beginAtZero: true
-                                        }
-                                    }
+                            options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
                                 }
+                            }
+                        }
                             });
                         });
                     </script>
@@ -66,8 +70,107 @@
             </div>
 
         </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 ">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Classification Report</h5>
 
+                    <!-- Table with hoverable rows -->
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Precision</th>
+                                <th scope="col">Recall</th>
+                                <th scope="col">F1-score</th>
+                                <th scope="col">Support</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">class-0</th>
+                                <td>0.99</td>
+                                <td>0.69</td>
+                                <td>0.82</td>
+                                <td>234</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">class-1</th>
+                                <td>0.84</td>
+                                <td>1.0</td>
+                                <td>0.91</td>
+                                <td>390</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Accuracy</th>
+                                <td></td>
+                                <td></td>
+                                <td>0.88</td>
+                                <td>624</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Macro avg</th>
+                                <td>0.92</td>
+                                <td>0.84</td>
+                                <td>0.87</td>
+                                <td>624</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Weghted avg</th>
+                                <td>0.90</td>
+                                <td>0.88</td>
+                                <td>0.88</td>
+                                <td>624</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 ">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Confusion matrix</h5>
+
+                    <!-- Table with hoverable rows -->
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Class 0</th>
+                                <th scope="col">Class 1</th>
+                                <th scope="col">Total</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">class 0</th>
+                                <td>162</td>
+                                <td>72</td>
+                                <td>234</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">class 1</th>
+                                <td>1</td>
+                                <td>389</td>
+                                <td>390</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Total</th>
+                                <td>163</td>
+                                <td>461</td>
+                                <td>624</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
     </div>
 
 </section>
