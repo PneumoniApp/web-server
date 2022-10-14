@@ -1,6 +1,14 @@
 {% extends 'main/base.html' %}
 {% block title%} Information page {%endblock%}
+
 {% block username%} {{username}} {%endblock%}
+{% block scripts_head %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" />
+<link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css" />
+
+
+{% endblock %}
 {% block content%}
 <div class="pagetitle">
     <h1>Information Page</h1>
@@ -78,14 +86,14 @@
                     <h5 class="card-title">Classification Report</h5>
 
                     <!-- Table with hoverable rows -->
-                    <table class="table table-hover">
+                    <table class="table table-hover reportTable">
                         <thead>
                             <tr>
-                                <th scope="col"></th>
-                                <th scope="col">Precision</th>
-                                <th scope="col">Recall</th>
-                                <th scope="col">F1-score</th>
-                                <th scope="col">Support</th>
+                                <th scope="col" class="th-sm"></th>
+                                <th scope="col" class="th-sm">Precision</th>
+                                <th scope="col" class="th-sm">Recall</th>
+                                <th scope="col" class="th-sm">F1-score</th>
+                                <th scope="col" class="th-sm">Support</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -176,3 +184,17 @@
 
 </section>
 {%endblock%}
+{% block scripts_body%}
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"
+    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+<script src="//cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.reportTable').DataTable({
+            responsive: true
+        });
+    });
+</script>
+{% endblock %}
