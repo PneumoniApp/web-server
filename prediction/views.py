@@ -41,6 +41,35 @@ def createPrediction(response):
        
     return render(response,"prediction/create.html",{"form":form})
 
+def createSpecificPrediction(response,id):
+    patient=Patient.objects.filter(user_id=response.user.id)
+    sp=patient.filter(id=id)
+    ch= [(p.id,str(p.nss)+" ("+str(p.name)+ ")") for p in patient]
+    if response.method == "POST":
+        form = CreateNewXRay(response.POST,response.FILES,choice=ch)
+
+        if form.is_valid():
+            n= form.cleaned_data["patient"]
+            i= form.cleaned_data.get("img")
+            x = XRay(patient_id=n, img=i)
+            x.save()
+            response.user.xray.add(x)
+            patient=Patient.objects.get(id=x.patient_id)
+            #bck of image binary field
+            path=str(x.img.path)
+            image_bck=open(path,'rb')
+            image_read=image_bck.read()
+            bck= XRayBck(img=image_read)
+            bck.pk=x.pk
+            bck.save(using='pneumonia_bck')
+            form = CreateNewComment()
+            com=Comment.objects.filter(xray_id=x.id)
+            return render(response,"prediction/nonLoadPrediction.html",{"xray":x,"patient":patient,"form":form,"comments":com})
+    else:
+        form = CreateNewXRay(choice=ch)
+       
+    return render(response,"prediction/create.html",{"form":form})
+
 def viewPrediction(response,id):
     if response.method == "POST":
         form = CreateNewComment(response.POST)
