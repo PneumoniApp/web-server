@@ -46,8 +46,9 @@ def editPatient(response,id):
         return HttpResponseRedirect("/viewPatient/%i" %x.id)
     else:
         x=Patient.objects.get(id=id)
+        CHOICES = [('0', 'Male'), ('1', 'Female')]
         sex=str(x.sex)
-        form = CreateNewPatient(initial={'name':x.name,'sex':sex,'age':x.age,'weight':x.weight,'height':x.height,'nss':x.nss})
+        form = CreateNewPatient(initial={'name':x.name,'sex':CHOICES[1][0],'age':x.age,'weight':x.weight,'height':x.height,'nss':x.nss})
     return render(response,"patient/edit.html",{"form":form})
 
 def viewPatient(response,id):
