@@ -37,10 +37,7 @@ def editPatient(response,id):
             n_ss=form.cleaned_data.get("nss")
             x=Patient.objects.get(id=id)
             x.name=n
-            if(s==0):
-                x.sex='0'
-            else:
-                x.sex='1'
+            x.sex=s
             x.age=a
             x.weight=w
             x.height=h
@@ -49,7 +46,8 @@ def editPatient(response,id):
         return HttpResponseRedirect("/viewPatient/%i" %x.id)
     else:
         x=Patient.objects.get(id=id)
-        form = CreateNewPatient(initial={'name':x.name,'sex':x.sex,'age':x.age,'weight':x.weight,'height':x.height,'nss':x.nss})
+        sex=str(x.sex)
+        form = CreateNewPatient(initial={'name':x.name,'sex':sex,'age':x.age,'weight':x.weight,'height':x.height,'nss':x.nss})
     return render(response,"patient/edit.html",{"form":form})
 
 def viewPatient(response,id):
