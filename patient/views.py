@@ -37,7 +37,10 @@ def editPatient(response,id):
             n_ss=form.cleaned_data.get("nss")
             x=Patient.objects.get(id=id)
             x.name=n
-            x.sex=s
+            if(s==0):
+                x.sex='0'
+            else:
+                x.sex='1'
             x.age=a
             x.weight=w
             x.height=h
