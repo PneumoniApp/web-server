@@ -47,8 +47,10 @@ def editPatient(response,id):
     else:
         x=Patient.objects.get(id=id)
         CHOICES = [('0', 'Male'), ('1', 'Female')]
-        sex=str(x.sex)
-        form = CreateNewPatient(initial={'name':x.name,'sex':CHOICES[1][0],'age':x.age,'weight':x.weight,'height':x.height,'nss':x.nss})
+        i=0
+        if(x.sex==1):
+            i=1
+        form = CreateNewPatient(initial={'name':x.name,'sex':CHOICES[i][0],'age':x.age,'weight':x.weight,'height':x.height,'nss':x.nss})
     return render(response,"patient/edit.html",{"form":form})
 
 def viewPatient(response,id):
