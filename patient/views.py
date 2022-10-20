@@ -12,7 +12,6 @@ def createPatient(response):
         if form.is_valid():
             n= form.cleaned_data["name"]
             s= form.cleaned_data.get("sex")
-            print(s)
             a=form.cleaned_data.get("age")
             w=form.cleaned_data.get("weight")
             h=form.cleaned_data.get("height")
@@ -24,6 +23,31 @@ def createPatient(response):
     else:
         form = CreateNewPatient()
     return render(response,"patient/create.html",{"form":form})
+
+def editPatient(response,id):
+    if response.method == "POST":
+        form = CreateNewPatient(response.POST)
+
+        if form.is_valid():
+            n= form.cleaned_data["name"]
+            s= form.cleaned_data.get("sex")
+            a=form.cleaned_data.get("age")
+            w=form.cleaned_data.get("weight")
+            h=form.cleaned_data.get("height")
+            n_ss=form.cleaned_data.get("nss")
+            x=Patient.objects.get(id=id)
+            x.name=n
+            x.sex=s
+            x.age=a
+            x.weight=w
+            x.height=h
+            x.nss=n_ss
+            x.save()
+        return HttpResponseRedirect("/viewPatient/%i" %x.id)
+    else:
+        x=Patient.objects.get(id=id)
+        form = CreateNewPatient(initial={'name':x.name,'sex':x.sex,'age':x.age,'weight':x.weight,'height':x.height,'nss':x.nss})
+    return render(response,"patient/edit.html",{"form":form})
 
 def viewPatient(response,id):
     x=Patient.objects.get(id=id)
