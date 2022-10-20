@@ -44,7 +44,7 @@ def createPrediction(response):
 def createSpecificPrediction(response,id):
     patient=Patient.objects.filter(user_id=response.user.id)
     sp=patient.filter(id=id)
-    ch= [(p.id,str(p.nss)+" ("+str(p.name)+ ")") for p in patient]
+    ch= [(p.id,str(p.nss)+" ("+str(p.name)+ ")") for p in sp]
     if response.method == "POST":
         form = CreateNewXRay(response.POST,response.FILES,choice=ch)
 
