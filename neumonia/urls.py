@@ -25,7 +25,7 @@ urlpatterns = [
     path("register/",v.register, name="register"),
     path('', include("main.urls")),
     path('', include("prediction.urls")),
-    path('',include("django.contrib.auth.urls")),
+    #path('',include("django.contrib.auth.urls")),
     path('', include("patient.urls")),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
